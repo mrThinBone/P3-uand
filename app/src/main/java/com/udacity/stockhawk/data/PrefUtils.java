@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.State;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,6 +14,26 @@ import java.util.Set;
 public final class PrefUtils {
 
     private PrefUtils() {
+    }
+
+    @SuppressWarnings("ResourceType")
+    public static @State int getState(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(context.getString(R.string.pref_app_state), State.STATUS_UNKNOWN);
+    }
+
+    public static void updateState(Context context, @State int state) {
+        String pref_listener_trigger_key = context.getString(R.string.pref_trigger_pref_listener);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int value = prefs.getInt(pref_listener_trigger_key, 0);
+        if(value > 99) value = 0;
+        else value++;
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(context.getString(R.string.pref_app_state), state);
+        // always trigger Preference listener when set appState even with same State value
+        editor.putInt(pref_listener_trigger_key, value);
+        editor.apply();
     }
 
     public static Set<String> getStocks(Context context) {

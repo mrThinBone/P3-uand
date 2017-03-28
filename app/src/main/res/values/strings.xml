@@ -5,6 +5,8 @@
 
     <string name="pref_stocks_key">stocks</string>
 
+    <string name="pref_app_state">appState</string>
+    <string name="pref_trigger_pref_listener">appStateTrigger</string>
 
     <string name="pref_display_mode_key">displayMode</string>
     <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
@@ -27,6 +29,7 @@
     <string name="dialog_add">Add</string>
 
     <string name="error_no_network">No network connectivity! Will load stock cursor when the network is available.</string>
+    <string name="error_server_down">Finance server is not available! Will load stock cursor when the server is available.</string>
     <string name="error_no_stocks">No stocks added! Hit the floating action button to add one.</string>
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>

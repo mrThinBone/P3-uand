@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.udacity.stockhawk.State;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 
@@ -58,6 +59,7 @@ public final class QuoteSyncJob {
             Timber.d(stockCopy.toString());
 
             if (stockArray.length == 0) {
+                PrefUtils.updateState(context, State.STATUS_EMPTY_INPUT);
                 return;
             }
 
@@ -114,6 +116,7 @@ public final class QuoteSyncJob {
             context.sendBroadcast(dataUpdatedIntent);
 
         } catch (IOException exception) {
+            PrefUtils.updateState(context, State.STATUS_SERVER_DOWN);
             Timber.e(exception, "Error fetching stock quotes");
         }
     }
@@ -152,6 +155,7 @@ public final class QuoteSyncJob {
             Intent nowIntent = new Intent(context, QuoteIntentService.class);
             context.startService(nowIntent);
         } else {
+            PrefUtils.updateState(context, State.STATUS_NO_NETWORK);
 
             JobInfo.Builder builder = new JobInfo.Builder(ONE_OFF_ID, new ComponentName(context, QuoteJobService.class));
 
