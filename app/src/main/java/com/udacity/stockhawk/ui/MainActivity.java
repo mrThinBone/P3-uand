@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void updateEmptyView() {
+        swipeRefreshLayout.setRefreshing(false);
         if(adapter.getItemCount() > 0) return;
 
         int state = PrefUtils.getState(this);
@@ -134,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             default:
                 break;
         }
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        swipeRefreshLayout.setRefreshing(false);
+//        swipeRefreshLayout.setRefreshing(false);
 
         if (data.getCount() != 0) {
             error.setVisibility(View.GONE);

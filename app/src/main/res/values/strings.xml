@@ -18,6 +18,7 @@
     <string name="default_stocks_apple">AAPL</string>
     <string name="default_stocks_microsoft">MSFT</string>
     <string name="default_stocks_facebook">FB</string>
+    <string name="alert_invalid_stock">not available!</string>
 
 
     <string name="action_change_units">@string/pref_display_mode_key</string>

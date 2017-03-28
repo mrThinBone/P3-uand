@@ -28,6 +28,8 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     private final DecimalFormat percentageFormat;
     private Cursor cursor;
     private final StockAdapterOnClickHandler clickHandler;
+    private int defaultTextColor = -1;
+    private int invalidTextColor;
 
     StockAdapter(Context context, StockAdapterOnClickHandler clickHandler) {
         this.context = context;
@@ -57,6 +59,11 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     public StockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View item = LayoutInflater.from(context).inflate(R.layout.list_item_quote, parent, false);
+        if(defaultTextColor == -1) {
+            TextView textView = (TextView) item.findViewById(R.id.price);
+            defaultTextColor = textView.getCurrentTextColor();
+            invalidTextColor = context.getResources().getColor(R.color.material_red_700);
+        }
 
         return new StockViewHolder(item);
     }
@@ -68,7 +75,19 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
 
         holder.symbol.setText(cursor.getString(Contract.Quote.POSITION_SYMBOL));
-        holder.price.setText(dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
+
+
+        float price = cursor.getFloat(Contract.Quote.POSITION_PRICE);
+        if(price < 0) {
+            holder.change.setVisibility(View.GONE);
+            holder.price.setTextColor(invalidTextColor);
+            holder.price.setText(context.getString(R.string.alert_invalid_stock));
+            return;
+        } else {
+            holder.price.setTextColor(defaultTextColor);
+            holder.change.setVisibility(View.VISIBLE);
+        }
+        holder.price.setText(dollarFormat.format(price));
 
 
         float rawAbsoluteChange = cursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);

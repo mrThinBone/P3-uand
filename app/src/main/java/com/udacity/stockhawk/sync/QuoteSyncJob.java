@@ -76,6 +76,17 @@ public final class QuoteSyncJob {
 
                 Stock stock = quotes.get(symbol);
                 StockQuote quote = stock.getQuote();
+                if(quote.getPrice() == null) {
+                    // invalid stock quote
+                    ContentValues quoteCV = new ContentValues();
+                    quoteCV.put(Contract.Quote.COLUMN_SYMBOL, symbol);
+                    quoteCV.put(Contract.Quote.COLUMN_PRICE, -1);
+                    quoteCV.put(Contract.Quote.COLUMN_PERCENTAGE_CHANGE, 0);
+                    quoteCV.put(Contract.Quote.COLUMN_ABSOLUTE_CHANGE, 0);
+                    quoteCV.put(Contract.Quote.COLUMN_HISTORY, "unknown");
+                    quoteCVs.add(quoteCV);
+                    continue;
+                }
 
                 float price = quote.getPrice().floatValue();
                 float change = quote.getChange().floatValue();
@@ -115,6 +126,7 @@ public final class QuoteSyncJob {
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
             context.sendBroadcast(dataUpdatedIntent);
 
+            PrefUtils.updateState(context, State.STATUS_OK);
         } catch (IOException exception) {
             PrefUtils.updateState(context, State.STATUS_SERVER_DOWN);
             Timber.e(exception, "Error fetching stock quotes");
