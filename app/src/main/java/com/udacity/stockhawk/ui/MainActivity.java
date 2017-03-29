@@ -1,6 +1,7 @@
 package com.udacity.stockhawk.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -29,7 +30,6 @@ import com.udacity.stockhawk.sync.QuoteSyncJob;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
@@ -50,8 +50,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private boolean prefListenerRegisted = true;
 
     @Override
-    public void onClick(String symbol) {
-        Timber.d("Symbol clicked: %s", symbol);
+    public void onClick(String symbol, String history) {
+        Bundle extras = new Bundle();
+        extras.putString("symbol", symbol);
+        extras.putString("history", history);
+        Intent intent = new Intent(this, StockChartActivity.class);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 
     @Override
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        QuoteSyncJob.initialize(this);
+//        QuoteSyncJob.initialize(this);
         getSupportLoaderManager().initLoader(STOCK_LOADER, null, this);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -104,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         prefListenerRegisted = false;
+        if(swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
         super.onPause();
     }
 

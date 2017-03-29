@@ -8,4 +8,10 @@
     <color name="material_red_700">#D50000</color>
     <color name="material_green_700">#00C853</color>
 
+    <color name="chartBackground">#FAFAFA</color>
+    <color name="chartLabel">#616161</color>
+    <color name="chartHighlight">#006064</color>
+    <color name="chartLine">#004D40</color>
+    <color name="chartHighlightBackground">#78909C</color>
+    <color name="chartBackLine">#E0E0E0</color>
 </resources>
