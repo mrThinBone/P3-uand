@@ -20,6 +20,8 @@
     <string name="default_stocks_facebook">FB</string>
     <string name="alert_invalid_stock">not available!</string>
 
+    <string name="empty_stock_list">No data.</string>
+
 
     <string name="action_change_units">@string/pref_display_mode_key</string>
 

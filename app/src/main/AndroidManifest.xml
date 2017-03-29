@@ -49,6 +49,9 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_stock_hawk"/>
         </receiver>
+        <service android:name=".widget.StockHawkWidgetRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>
