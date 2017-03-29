@@ -40,6 +40,15 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity android:name=".ui.StockChartActivity"/>
+
+        <receiver android:name=".widget.StockHawkWidgetProvider"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_stock_hawk"/>
+        </receiver>
     </application>
 
 </manifest>
