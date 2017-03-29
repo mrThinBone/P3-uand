@@ -1,25 +1,29 @@
 package com.udacity.stockhawk.ui;
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.task.ReadHistoryTask;
 import com.udacity.stockhawk.task.ReadHistoryTask.StockHistory;
@@ -32,6 +36,7 @@ public class StockChartActivity extends AppCompatActivity implements
 
     private static final int LOADER_ID = 2003;
 
+    private List<StockHistory> mData;
     private LineChart mChart;
 
     @Override
@@ -57,7 +62,7 @@ public class StockChartActivity extends AppCompatActivity implements
 
         // enable scaling and dragging
         mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
+        mChart.setScaleEnabled(false);
 
         // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(false);
@@ -84,6 +89,9 @@ public class StockChartActivity extends AppCompatActivity implements
 
         mChart.getAxisRight().setEnabled(false);
 
+        LineMarkerView customMarker = new LineMarkerView(this, R.layout.marker_view);
+        mChart.setMarker(customMarker);
+
         mChart.getLegend().setEnabled(false);
 
         Bundle extras = getIntent().getExtras();
@@ -96,6 +104,7 @@ public class StockChartActivity extends AppCompatActivity implements
         args.putString("historyData", historyData);
         getSupportLoaderManager().initLoader(LOADER_ID, args, this);
 
+        Toast.makeText(this, getString(R.string.chart_usage_hint), Toast.LENGTH_SHORT).show();
     }
 
     private void setChartData(List<StockHistory> stockHistories) {
@@ -103,9 +112,20 @@ public class StockChartActivity extends AppCompatActivity implements
         ArrayList<Entry> yVals = new ArrayList<>();
 
         for (int i = 0; i < stockHistories.size(); i++) {
-
             yVals.add(new Entry(i, (float) stockHistories.get(i).value));
         }
+
+        // draw x axis label by time
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+//                Log.v("vinhtv", String.valueOf(value));
+                int index = Math.round(value);
+                return mData.get(index).strDate;
+            }
+        });
 
         LineDataSet set1;
 
@@ -161,6 +181,7 @@ public class StockChartActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<List<StockHistory>> loader, List<StockHistory> data) {
+        mData = data;
         if(data.size() > 0) {
             setChartData(data);
             mChart.animateXY(2000, 2000);
@@ -170,4 +191,27 @@ public class StockChartActivity extends AppCompatActivity implements
 
     @Override
     public void onLoaderReset(Loader<List<StockHistory>> loader) {}
+
+    class LineMarkerView extends MarkerView {
+        private TextView tvContent;
+        public LineMarkerView (Context context, int layoutResource) {
+            super(context, layoutResource);
+            // this markerview only displays a textview
+            tvContent = (TextView) findViewById(R.id.tvContent);
+        }
+
+        // callbacks everytime the MarkerView is redrawn, can be used to update the
+        // content (user-interface)
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            if(mData == null) return;
+            int index = Math.round(e.getX());
+            tvContent.setText(mData.get(index).highlightValue); // set the entry-value as the display text
+        }
+
+        @Override
+        public MPPointF getOffset() {
+            return MPPointF.getInstance(-getWidth(), -getHeight());
+        }
+    }
 }

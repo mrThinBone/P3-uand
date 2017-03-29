@@ -36,5 +36,6 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
 
-    <string name="chart_highlight_value_holder">120.32$ at 20&#8211;12&#8211;17</string>
+    <string name="chart_highlight_value_holder">120.32$ at 20 Mar 2017s</string>
+    <string name="chart_usage_hint">Consider using landscape mode for better experiment.</string>
 </resources>

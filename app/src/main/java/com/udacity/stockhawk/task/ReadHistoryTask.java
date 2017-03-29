@@ -3,9 +3,14 @@ package com.udacity.stockhawk.task;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.udacity.stockhawk.task.ReadHistoryTask.StockHistory;
 
@@ -45,18 +50,20 @@ public class ReadHistoryTask extends AsyncTaskLoader<List<StockHistory>> {
     }
 
     public static class StockHistory {
+        private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy", Locale.US);
+        private static final SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd MMM  yyyy", Locale.US);
+        private static final NumberFormat formatter = new DecimalFormat("#0.00");
         public final String strDate;
-        public final long date;
+//        public final long date;
         public final double value;
+        public final String highlightValue;
 
-        public StockHistory(long date, double value) {
-            this.strDate = dateFormat(date);
-            this.date = date;
+        public StockHistory(long timeInMillis, double value) {
+            Date date = new Date(timeInMillis);
+            this.strDate = dateFormat.format(date);
+//            this.date = date;
             this.value = value;
-        }
-
-        private static String dateFormat(long date) {
-            return "";
+            highlightValue = formatter.format(value) + "$ at " + dateFormat2.format(date);
         }
     }
 }
