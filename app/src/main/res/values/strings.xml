@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Stock Hawk</string>
 
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
@@ -40,4 +40,11 @@
 
     <string name="chart_highlight_value_holder">120.32$ at 20 Mar 2017s</string>
     <string name="chart_usage_hint">Consider using landscape mode for better experiment.</string>
+
+    <string name="a11y_stock_symbol">Stock Quote: <xliff:g id="symbol">%1$s</xliff:g></string>
+    <string name="a11y_stock_price">Price: <xliff:g id="price">%1$.2f</xliff:g> dollar</string>
+    <string name="a11y_stock_change">Change: <xliff:g id="change">%1$.2f</xliff:g> dollar</string>
+    <string name="a11y_stock_change_pct">Change: <xliff:g id="change">%1$.2f</xliff:g> percentage</string>
+    <string name="a11y_add_more">Add another stock quote</string>
+    <string name="a11y_invalid_stock">not available</string>
 </resources>

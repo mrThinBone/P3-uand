@@ -59,20 +59,24 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
         cursor.moveToPosition(position);
 
-
-        holder.symbol.setText(cursor.getString(Contract.Quote.POSITION_SYMBOL));
-
-
+        String symbol = cursor.getString(Contract.Quote.POSITION_SYMBOL);
         float price = cursor.getFloat(Contract.Quote.POSITION_PRICE);
+
+        holder.symbol.setText(symbol);
+        holder.symbol.setContentDescription(context.getString(R.string.a11y_stock_symbol, symbol));
+
+
         if(price < 0) {
             holder.change.setVisibility(View.GONE);
             holder.price.setTextColor(invalidTextColor);
             holder.price.setText(context.getString(R.string.alert_invalid_stock));
+            holder.price.setContentDescription(context.getString(R.string.a11y_invalid_stock));
             return;
         } else {
             holder.price.setTextColor(defaultTextColor);
-            holder.change.setVisibility(View.VISIBLE);
             holder.price.setText(Utility.priceFormat(price));
+            holder.price.setContentDescription(context.getString(R.string.a11y_stock_price, price));
+            holder.change.setVisibility(View.VISIBLE);
         }
 
 
@@ -91,8 +95,10 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         if (PrefUtils.getDisplayMode(context)
                 .equals(context.getString(R.string.pref_display_mode_absolute_key))) {
             holder.change.setText(change);
+            holder.change.setContentDescription(context.getString(R.string.a11y_stock_change, rawAbsoluteChange));
         } else {
             holder.change.setText(percentage);
+            holder.change.setContentDescription(context.getString(R.string.a11y_stock_change_pct, percentageChange));
         }
     }
 

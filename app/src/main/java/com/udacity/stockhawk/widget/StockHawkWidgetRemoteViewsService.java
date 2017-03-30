@@ -74,15 +74,18 @@ public class StockHawkWidgetRemoteViewsService extends RemoteViewsService {
                 RemoteViews views = getLoadingView();
                 // symbol
                 views.setTextViewText(R.id.symbol, symbol);
+                views.setContentDescription(R.id.symbol, getString(R.string.a11y_stock_symbol, symbol));
                 // price
                 if(price < 0) {
                     views.setViewVisibility(R.id.change, View.GONE);
                     views.setTextColor(R.id.price, invalidTextColor);
                     views.setTextViewText(R.id.price, getString(R.string.alert_invalid_stock));
+                    views.setContentDescription(R.id.price, getString(R.string.a11y_invalid_stock));
                 } else {
                     views.setViewVisibility(R.id.change, View.VISIBLE);
                     views.setTextColor(R.id.price, defaultTextColor);
                     views.setTextViewText(R.id.price, Utility.priceFormat(price));
+                    views.setContentDescription(R.id.price, getString(R.string.a11y_stock_price, price));
                 }
 
                 // change
@@ -96,8 +99,10 @@ public class StockHawkWidgetRemoteViewsService extends RemoteViewsService {
                 if (PrefUtils.getDisplayMode(getApplicationContext())
                         .equals(getString(R.string.pref_display_mode_absolute_key))) {
                     views.setTextViewText(R.id.change, change);
+                    views.setContentDescription(R.id.change, getString(R.string.a11y_stock_change, rawAbsoluteChange));
                 } else {
                     views.setTextViewText(R.id.change, percentage);
+                    views.setContentDescription(R.id.change, getString(R.string.a11y_stock_change_pct, percentageChange));
                 }
 
                 // on click
