@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="alert_invalid_stock">غير متاح!</string>
+    <string name="empty_stock_list">لايوجد بيانات.</string>
+
+    <string name="dialog_title">إضافة الأسهم</string>
+    <string name="dialog_hint">رمز</string>
+    <string name="dialog_cancel">إلغاء</string>
+    <string name="dialog_add">إضافة</string>
+
+    <string name="action_change_units">وضع العرض</string>
+
+    <string name="error_no_network">لا اتصال الشبكة!</string>
+    <string name="error_server_down">خادم المالية غير متوفر!</string>
+    <string name="error_no_stocks">لم يتم إضافة أي أسهم!</string>
+
+    <string name="toast_stock_added_no_connectivity">تمت إضافة الرمز. سيتم تحديث عندما الشبكة المتاحة.</string>
+    <string name="toast_no_connectivity">سيتم تحديث عندما الشبكة المتاحة.</string>
+
+    <string name="chart_usage_hint">فكر في استخدام وضع أفقي لتجربة أفضل.</string>
+
+    <string name="a11y_stock_symbol"><xliff:g id="symbol">%1$s</xliff:g>اقتباس الأسهم:</string>
+    <string name="a11y_stock_price">$<xliff:g id="price">%1$.2f</xliff:g>السعر:</string>
+    <string name="a11y_stock_change">$<xliff:g id="change">%1$.2f</xliff:g> يتغيرون:</string>
+    <string name="a11y_stock_change_pct">النسبة المئوية <xliff:g id="change">%1$.2f</xliff:g>يتغيرون:</string>
+    <string name="a11y_add_more">إضافة عرض أسعار آخر</string>
+    <string name="a11y_invalid_stock">غير متاح</string>
+</resources>

@@ -1,23 +1,23 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Stock Hawk</string>
+    <string name="app_name" translatable="false">Stock Hawk</string>
 
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
 
-    <string name="pref_stocks_key">stocks</string>
+    <string name="pref_stocks_key" translatable="false">stocks</string>
 
-    <string name="pref_app_state">appState</string>
-    <string name="pref_trigger_pref_listener">appStateTrigger</string>
+    <string name="pref_app_state" translatable="false">appState</string>
+    <string name="pref_trigger_pref_listener" translatable="false">appStateTrigger</string>
 
-    <string name="pref_display_mode_key">displayMode</string>
-    <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
+    <string name="pref_display_mode_key" translatable="false">displayMode</string>
+    <string name="pref_display_mode_default" translatable="false">@string/pref_display_mode_percentage_key</string>
 
-    <string name="pref_display_mode_absolute_key">absolute</string>
-    <string name="pref_display_mode_percentage_key">percentage</string>
+    <string name="pref_display_mode_absolute_key" translatable="false">absolute</string>
+    <string name="pref_display_mode_percentage_key" translatable="false">percentage</string>
 
-    <string name="default_stocks_yahoo">YHOO</string>
-    <string name="default_stocks_apple">AAPL</string>
-    <string name="default_stocks_microsoft">MSFT</string>
-    <string name="default_stocks_facebook">FB</string>
+    <string name="default_stocks_yahoo" translatable="false">YHOO</string>
+    <string name="default_stocks_apple" translatable="false">AAPL</string>
+    <string name="default_stocks_microsoft" translatable="false">MSFT</string>
+    <string name="default_stocks_facebook" translatable="false">FB</string>
     <string name="alert_invalid_stock">not available!</string>
 
     <string name="empty_stock_list">No data.</string>
@@ -38,7 +38,7 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
 
-    <string name="chart_highlight_value_holder">120.32$ at 20 Mar 2017s</string>
+    <string name="chart_highlight_value_holder" translatable="false">120.32$ at 20 Mar 2017s</string>
     <string name="chart_usage_hint">Consider using landscape mode for better experiment.</string>
 
     <string name="a11y_stock_symbol">Stock Quote: <xliff:g id="symbol">%1$s</xliff:g></string>
