@@ -89,7 +89,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
-                getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                int rowsDeleted = getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                if(rowsDeleted > 0) {
+                    Intent dataUpdatedIntent = new Intent(QuoteSyncJob.ACTION_DATA_UPDATED);
+                    MainActivity.this.sendBroadcast(dataUpdatedIntent);
+                }
             }
         }).attachToRecyclerView(stockRecyclerView);
     }

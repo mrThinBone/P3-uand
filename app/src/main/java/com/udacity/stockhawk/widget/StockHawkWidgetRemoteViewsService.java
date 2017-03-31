@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Binder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
@@ -31,11 +32,13 @@ public class StockHawkWidgetRemoteViewsService extends RemoteViewsService {
 
             @Override
             public void onCreate() {
+                Log.v("WidgetRVS", "onCreate");
                 invalidTextColor = getResources().getColor(R.color.material_red_700);
             }
 
             @Override
             public void onDataSetChanged() {
+                Log.v("WidgetRVS", "onDataSetChanged");
                 if(data != null) data.close();
 
                 // in order to get data from Content Provider, then we need identity token
