@@ -50,20 +50,26 @@ public class ReadHistoryTask extends AsyncTaskLoader<List<StockHistory>> {
     }
 
     public static class StockHistory {
+        private static final boolean localeUS = Locale.getDefault() == Locale.US;
         private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy", Locale.US);
         private static final SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd MMM  yyyy", Locale.US);
+        private static final SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         private static final NumberFormat formatter = new DecimalFormat("#0.00");
+
+
         public final String strDate;
-//        public final long date;
         public final double value;
         public final String highlightValue;
 
         public StockHistory(long timeInMillis, double value) {
             Date date = new Date(timeInMillis);
             this.strDate = dateFormat.format(date);
-//            this.date = date;
             this.value = value;
-            highlightValue = formatter.format(value) + "$ at " + dateFormat2.format(date);
+            if(localeUS) {
+                highlightValue = formatter.format(value) + "$ at " + dateFormat2.format(date);
+            } else {
+                highlightValue = formatter.format(value) + "$ at " + dateFormat3.format(date);
+            }
         }
     }
 }
