@@ -75,6 +75,8 @@ public final class QuoteSyncJob {
 
 
                 Stock stock = quotes.get(symbol);
+                if(stock == null) continue;
+
                 StockQuote quote = stock.getQuote();
                 if(quote.getPrice() == null) {
                     // invalid stock quote
