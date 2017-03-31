@@ -51,7 +51,7 @@ public class StockChartActivity extends AppCompatActivity implements
 
 
         mChart = (LineChart) findViewById(R.id.chart1);
-        mChart.setViewPortOffsets(50, 0, 50, 0);
+        mChart.setViewPortOffsets(70, 0, 60, 0);
         mChart.setBackgroundColor(chartBackgroundColor);
 
         // no description text
@@ -77,15 +77,31 @@ public class StockChartActivity extends AppCompatActivity implements
         x.setDrawGridLines(true);
         x.setGridColor(chartBackLinesColor);
         x.setAxisLineColor(chartBackLinesColor);
+        // label x axis by time
+        x.setValueFormatter(new IAxisValueFormatter() {
+
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                int index = Math.round(value);
+                return mData.get(index).strDate;
+            }
+        });
 
         YAxis y = mChart.getAxisLeft();
-//        y.setTypeface(mTfLight);
         y.setLabelCount(6, false);
         y.setTextColor(chartLabelColor);
         y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         y.setDrawGridLines(true);
         y.setGridColor(chartBackLinesColor);
         y.setAxisLineColor(chartBackLinesColor);
+        // label y axis by $ price
+        y.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return getString(R.string.y_axis_price_format, value);
+            }
+        });
+
 
         mChart.getAxisRight().setEnabled(false);
 
@@ -114,18 +130,6 @@ public class StockChartActivity extends AppCompatActivity implements
         for (int i = 0; i < stockHistories.size(); i++) {
             yVals.add(new Entry(i, (float) stockHistories.get(i).value));
         }
-
-        // draw x axis label by time
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-//                Log.v("vinhtv", String.valueOf(value));
-                int index = Math.round(value);
-                return mData.get(index).strDate;
-            }
-        });
 
         LineDataSet set1;
 
